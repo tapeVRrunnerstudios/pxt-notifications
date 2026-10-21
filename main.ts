@@ -56,10 +56,15 @@ namespace notifications {
         // Draw the notification look
         banner.image.fill(bgColor);
         banner.image.drawRect(0, 0, 140, 24, 15);
-        banner.image.drawImage(current.icon, 4, 4);
+
+        // Draw the icon if one was provided
+        if (current.icon) {
+            banner.image.drawImage(current.icon, 4, 4);
+        }
+
         banner.image.print(current.text, 24, 8, 15);
 
-        // Run the slide and timer animation in parallel so it doesn't freeze game logic
+        // Run the slide and timer animation in parallel
         control.runInParallel(function () {
             // 1. Slide down animation
             let targetY = 16;
@@ -67,7 +72,7 @@ namespace notifications {
                 banner.y += 2;
                 pause(15);
             }
-            banner.y = targetY; // Snap to exact position
+            banner.y = targetY;
 
             // 2. Wait for the specified duration (convert seconds to milliseconds)
             pause(current.duration * 1000);
